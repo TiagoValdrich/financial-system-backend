@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/TiagoValdrich/financial-system-backend.svg?branch=master)](https://travis-ci.org/TiagoValdrich/financial-system-backend)
+
 #  Financial System - *Back-end*
 
 This project, is a simple system for college, that has as purpose make easy to people management their cash flow.
