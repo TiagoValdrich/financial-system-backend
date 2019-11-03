@@ -17,6 +17,10 @@ filenames.forEach((filename) => {
     app.use(require(`./src/routes/${filename}`));
 });
 
+app.get('/', (req, res) => {
+    res.render('<h3 style="text-align: center; margin-top: 10px;">Financial System server, running.</h3>');
+});
+
 app.listen('3000', () => {
     console.log('Running application back-end.');
 });
