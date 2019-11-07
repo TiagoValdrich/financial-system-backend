@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize');
 const path = require('path');
 const fs = require('fs');
+const config = require('./env').env.database;
 
 // Create the database instance
-const sequelize = new Sequelize('financialsystem', 'root', '', {
-    host: 'localhost',
+const sequelize = new Sequelize(config.name, config.username, config.password, {
+    host: config.host,
     dialect: 'mysql'
 });
 
