@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test; mocha src/test",
+    "test": "NODE_ENV=test mocha src/test",
     "start": "nodemon .",
-    "dev": "NODE_ENV=development; nodemon ."
+    "dev": "NODE_ENV=development nodemon ."
   },
   "author": "",
   "license": "ISC",
