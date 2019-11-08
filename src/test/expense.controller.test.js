@@ -1,10 +1,10 @@
 const assert = require('assert');
-const expenseController = require('../controllers/expense.controller');
+const axios = require('axios');
 
 describe('Testing Expenses Controller', () => {
     describe('Testing method getExpenses', () => {
         it('It should return an array of expenses', async () => {
-            const expenses = await expenseController.getExpenses();
+            const expenses = await axios.get('/api/expense');
             assert.equal(typeof expenses, 'array');
         });
     });
