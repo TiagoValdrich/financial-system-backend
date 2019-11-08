@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test nodemon index.js mocha src/test",
+    "test": "nodemon index.js; mocha src/test",
     "start": "nodemon .",
     "dev": "NODE_ENV=development nodemon ."
   },

@@ -1,5 +1,7 @@
 language: node_js
 services:
   - mysql
+env:
+  - NODE_ENV=test
 before_install:
   - mysql -e 'CREATE DATABASE financialsystem;'
