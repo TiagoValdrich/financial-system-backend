@@ -26,8 +26,26 @@ exports.getExpense = async (req, res) => {
 
 exports.save = async (req, res) => {
     try {
-        await database.models.Expense.upsert(req.body);
-        return res.sendStatus(200);
+        let expense;
+        // If register does not have an id, is saving a new register
+        if (!req.body.id) {
+            expense = await database.models.Expense.create(req.body);
+            // If there is an id, is an update
+        } else {
+            const updated = await database.models.Expense.update(req.body, {
+                where: {
+                    id: req.body.id
+                }
+            });
+
+            if (!updated) {
+                return res.sendStatus(500);
+            }
+
+            expense = await database.models.Expense.findByPk(req.body.id);
+        }
+
+        return res.status(200).json(expense);
     } catch (error) {
         console.error('ERROR', error);
         return res.sendStatus(500);
