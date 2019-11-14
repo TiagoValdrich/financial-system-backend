@@ -26,8 +26,26 @@ exports.getRevenue = async (req, res) => {
 
 exports.save = async (req, res) => {
     try {
-        await database.models.Revenue.upsert(req.body);
-        return res.sendStatus(200);
+        let revenue;
+        // If register does not have an id, is saving a new register
+        if (!req.body.id) {
+            revenue = await database.models.Revenue.create(req.body);
+            // If there is an id, is an update
+        } else {
+            const updated = await database.models.Revenue.update(req.body, {
+                where: {
+                    id: req.body.id
+                }
+            });
+
+            if (!updated) {
+                return res.sendStatus(500);
+            }
+
+            revenue = await database.models.Revenue.findByPk(req.body.id);
+        }
+
+        return res.status(200).json(revenue);
     } catch (error) {
         console.error('ERROR', error);
         return res.sendStatus(500);

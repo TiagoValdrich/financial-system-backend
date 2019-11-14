@@ -4,5 +4,8 @@ module.exports = {
         username: 'root',
         password: '',
         host: 'localhost'
+    },
+    api: {
+        url: 'http://localhost:3000'
     }
 };
