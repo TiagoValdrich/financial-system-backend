@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha src/test --exit",
+    "test": "NODE_ENV=test mocha src/test --exit --timeout 30000",
     "start": "nodemon .",
     "dev": "NODE_ENV=development nodemon .",
-    "devTest": "NODE_ENV=devtest mocha src/test --exit"
+    "devTest": "NODE_ENV=devtest mocha src/test --exit --timeout 30000"
   },
   "author": "",
   "license": "ISC",
