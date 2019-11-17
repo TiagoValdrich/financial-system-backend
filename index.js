@@ -18,7 +18,7 @@ filenames.forEach((filename) => {
 });
 
 app.get('/', (req, res) => {
-    res.render('<h3 style="text-align: center; margin-top: 10px;">Financial System server, running.</h3>');
+    res.send('Financial System server, running.');
 });
 
 app.listen('3000', () => {
