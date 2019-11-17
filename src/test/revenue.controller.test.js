@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const env = require('../config/env').env;
 const assert = require('chai').assert;
 
-describe('Testing Expense Controller', () => {
+describe('Testing Revenue Controller', () => {
     let database;
     let server;
 
@@ -25,14 +25,14 @@ describe('Testing Expense Controller', () => {
 
     it('should return a status 200 if it saved', async () => {
         try {
-            const expense = {
+            const revenue = {
                 title: 'Teste',
                 value: -50,
                 date: new Date()
             };
-            const expenseResponse = await axios.put(`${env.api.url}/api/expense`, expense);
+            const revenueResponse = await axios.put(`${env.api.url}/api/revenue`, revenue);
 
-            if (expenseResponse.status == 200) {
+            if (revenueResponse.status == 200) {
                 return assert.ok(true);
             } else {
                 return assert.fail(true);
@@ -44,11 +44,11 @@ describe('Testing Expense Controller', () => {
 
     it('should return a status 200 if it updated successfully', async () => {
         try {
-            const expenseResponse = await axios.get(`${env.api.url}/api/expense/1`);
-            const newExpense = expenseResponse.data;
-            newExpense.title = 'New Expense Title';
-            newExpense.value = -150;
-            const updated = await axios.put(`${env.api.url}/api/expense`, newExpense);
+            const revenueResponse = await axios.get(`${env.api.url}/api/revenue/1`);
+            const newRevenue = revenueResponse.data;
+            newRevenue.title = 'New Revenue Title';
+            newRevenue.value = -150;
+            const updated = await axios.put(`${env.api.url}/api/revenue`, newRevenue);
 
             if (updated.status == 200) {
                 return assert.ok(true);
@@ -60,12 +60,12 @@ describe('Testing Expense Controller', () => {
         }
     });
 
-    it('should return an array of expenses', async () => {
+    it('should return an array of revenues', async () => {
         try {
-            const expenses = await axios.get(`${env.api.url}/api/expense`);
+            const revenues = await axios.get(`${env.api.url}/api/revenue`);
 
-            if (expenses.data && Array.isArray(expenses.data)) {
-                if (expenses.data[0].id && expenses.data[0].title && expenses.data[0].value) {
+            if (revenues.data && Array.isArray(revenues.data)) {
+                if (revenues.data[0].id && revenues.data[0].title && revenues.data[0].value) {
                     return assert.ok(true);
                 }
             }
@@ -76,11 +76,11 @@ describe('Testing Expense Controller', () => {
         }
     });
 
-    it('should return an expense', async () => {
+    it('should return an revenue', async () => {
         try {
-            const expense = await axios.get(`${env.api.url}/api/expense/1`);
+            const revenue = await axios.get(`${env.api.url}/api/revenue/1`);
 
-            if (expense.data) {
+            if (revenue.data) {
                 return assert.ok(true);
             } else {
                 return assert.fail(true);
@@ -105,7 +105,7 @@ function createServer() {
             app.use(bodyParser.urlencoded({
                 extended: true
             }));
-            app.use(require('../routes/expense.routes'));
+            app.use(require('../routes/revenue.routes'));
 
             const server = http.Server(app);
             server.listen('3000', () => {
