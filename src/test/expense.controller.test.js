@@ -8,6 +8,7 @@ const assert = require('chai').assert;
 
 describe('Testing Expense Controller', () => {
     let database;
+    let server;
 
     before(async () => {
         database = new Database({
@@ -18,7 +19,7 @@ describe('Testing Expense Controller', () => {
             force: forceDb,
             logging: console.log
         });
-        await createServer();
+        server = await createServer();
     });
 
     it('should return a status 200 if it saved', async () => {
@@ -87,6 +88,10 @@ describe('Testing Expense Controller', () => {
             return assert.fail(err);
         }
     });
+
+    after(() => {
+        server.close();
+    });
 });
 
 function createServer() {
@@ -102,7 +107,7 @@ function createServer() {
             app.use(require('../routes/expense.routes'));
             app.listen('3000', () => {
                 console.log('Server is running.');
-                resolve();
+                resolve(app);
             });
         } catch (err) {
             return reject(err);
