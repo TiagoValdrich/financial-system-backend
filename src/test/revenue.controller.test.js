@@ -87,10 +87,6 @@ describe('Testing Revenue Controller', () => {
             return assert.fail(err);
         }
     });
-
-    after(() => {
-        process.exit(0);
-    });
 });
 
 function createServer() {
