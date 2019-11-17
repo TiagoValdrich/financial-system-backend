@@ -1,6 +1,7 @@
 const Database = require('../config/sequelize').Database;
 const axios = require('axios').default;
 const express = require('express');
+const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const env = require('../config/env').env;
@@ -89,7 +90,7 @@ describe('Testing Expense Controller', () => {
         }
     });
 
-    after(() => {
+    after(async () => {
         server.close();
     });
 });
@@ -105,9 +106,11 @@ function createServer() {
                 extended: true
             }));
             app.use(require('../routes/expense.routes'));
-            app.listen('3000', () => {
+
+            const server = http.Server(app);
+            server.listen('3000', () => {
                 console.log('Server is running.');
-                resolve(app);
+                resolve(server);
             });
         } catch (err) {
             return reject(err);

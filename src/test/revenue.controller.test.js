@@ -1,6 +1,7 @@
 const Database = require('../config/sequelize').Database;
 const axios = require('axios').default;
 const express = require('express');
+const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const env = require('../config/env').env;
@@ -47,7 +48,7 @@ describe('Testing Revenue Controller', () => {
             const newRevenue = revenueResponse.data;
             newRevenue.title = 'New Revenue Title';
             newRevenue.value = -150;
-            const updated = await axios.put(`${env.api.url}/api/expense`, newRevenue);
+            const updated = await axios.put(`${env.api.url}/api/revenue`, newRevenue);
 
             if (updated.status == 200) {
                 return assert.ok(true);
@@ -105,9 +106,11 @@ function createServer() {
                 extended: true
             }));
             app.use(require('../routes/revenue.routes'));
-            app.listen('3000', () => {
+
+            const server = http.Server(app);
+            server.listen('3000', () => {
                 console.log('Server is running.');
-                resolve(app);
+                resolve(server);
             });
         } catch (err) {
             return reject(err);
