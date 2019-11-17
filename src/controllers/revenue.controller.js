@@ -65,7 +65,9 @@ exports.delete = async (req, res) => {
         });
 
         if (rowsDeleted > 0) {
-            return res.sendStatus(200);
+            return res.status(200).json({
+                deleted: true
+            });
         }
 
         return res.sendStatus(500);
