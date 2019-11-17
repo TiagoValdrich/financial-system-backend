@@ -90,7 +90,7 @@ describe('Testing Expense Controller', () => {
         }
     });
 
-    after(async () => {
+    after(() => {
         server.close();
     });
 });
