@@ -12,14 +12,21 @@ describe('Testing Expense Controller', () => {
     let server;
 
     before(async () => {
-        database = new Database({
+        const db = new Database({
             doSync: false
-        }).sequelize;
+        });
+        database = db.sequelize;
         const forceDb = process.env.NODE_ENV == 'devtest' ? true : false;
         await database.sync({
             force: forceDb,
             logging: console.log
         });
+        await db._loadAssociations(database);
+        await database.sync({
+            force: false,
+            logging: console.log
+        });
+        await db._doMigration(database);
         server = await createServer();
     });
 
@@ -90,8 +97,8 @@ describe('Testing Expense Controller', () => {
         }
     });
 
-    after(() => {
-        server.close();
+    after(async () => {
+        await closeConn(server);
     });
 });
 
@@ -113,7 +120,21 @@ function createServer() {
                 resolve(server);
             });
         } catch (err) {
+            console.log('erro desgraçado', err);
             return reject(err);
+        }
+    });
+}
+
+function closeConn(server) {
+    return new Promise((resolve, reject) => {
+        try {
+            server.close(() => {
+                resolve();
+            });
+        } catch (err) {
+            console.log('error', err);
+            reject(err);
         }
     });
 }

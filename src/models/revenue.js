@@ -17,7 +17,10 @@ module.exports = (sequelize) => {
     }, {
         tableName: 'revenue',
         timestamps: true,
-        paranoid: false
+        paranoid: false,
+        associate: function (models) {
+            Revenue.belongsTo(models.Category);
+        }
     });
 
     return Revenue;
