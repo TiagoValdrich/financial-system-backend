@@ -20,7 +20,7 @@ class Database {
 
         /** @todo refactor this to async and await pls */
         this._loadModels(sequelize).then(() => {
-            if (process.env.NODE_ENV != 'devtest') {
+            if (process.env.NODE_ENV != 'devtest' && process.env.NODE_ENV != 'test') {
                 sequelize.sync().then(() => {
                     this._loadAssociations(sequelize).then(() => {
                         if (this.doSync) {
