@@ -16,6 +16,7 @@ describe('Testing Expense Controller', () => {
             doSync: false
         });
         database = db.sequelize;
+        await database.query('SET FOREIGN_KEY_CHECKS = 0', null, null);
         const forceDb = process.env.NODE_ENV == 'devtest' ? true : false;
         await database.sync({
             force: forceDb,

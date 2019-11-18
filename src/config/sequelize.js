@@ -82,6 +82,8 @@ class Database {
             try {
                 require('../migrations/AddCategoryToExpense')(instance);
                 require('../migrations/AddCategoryToRevenue')(instance);
+                require('../migrations/AddFinancialResourceIdToExpense')(instance);
+                require('../migrations/AddFinancialResourceIdToRevenue')(instance);
                 resolve();
             } catch (err) {
                 reject(err);
