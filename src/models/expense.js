@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
         paranoid: false,
         associate: function (models) {
             Expense.belongsTo(models.Category);
+            Expense.belongsTo(models.FinancialResource);
         }
     });
 
