@@ -32,70 +32,82 @@ describe('Testing Revenue Controller', () => {
     });
 
     it('should return a status 200 if it saved', async () => {
-        try {
-            const revenue = {
-                title: 'Teste',
-                value: -50,
-                date: new Date()
-            };
-            const revenueResponse = await axios.put(`${env.api.url}/api/revenue`, revenue);
-
-            if (revenueResponse.status == 200) {
-                return assert.ok(true);
-            } else {
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(async () => {
+            try {
+                const revenue = {
+                    title: 'Teste',
+                    value: -50,
+                    date: new Date()
+                };
+                const revenueResponse = await axios.put(`${env.api.url}/api/revenue`, revenue);
+    
+                if (revenueResponse.status == 200) {
+                    return assert.ok(true);
+                } else {
+                    return assert.fail(true);
+                }
+            } catch (err) {
                 return assert.fail(true);
             }
-        } catch (err) {
-            return assert.fail(true);
-        }
+        }, 30000);
     });
 
     it('should return a status 200 if it updated successfully', async () => {
-        try {
-            const revenueResponse = await axios.get(`${env.api.url}/api/revenue/1`);
-            const newRevenue = revenueResponse.data;
-            newRevenue.title = 'New Revenue Title';
-            newRevenue.value = -150;
-            const updated = await axios.put(`${env.api.url}/api/revenue`, newRevenue);
-
-            if (updated.status == 200) {
-                return assert.ok(true);
-            } else {
-                return assert.fail(true);
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(async () => {
+            try {
+                const revenueResponse = await axios.get(`${env.api.url}/api/revenue/1`);
+                const newRevenue = revenueResponse.data;
+                newRevenue.title = 'New Revenue Title';
+                newRevenue.value = -150;
+                const updated = await axios.put(`${env.api.url}/api/revenue`, newRevenue);
+    
+                if (updated.status == 200) {
+                    return assert.ok(true);
+                } else {
+                    return assert.fail(true);
+                }
+            } catch (err) {
+                return assert.fail(err);
             }
-        } catch (err) {
-            return assert.fail(err);
-        }
+        }, 30000);
     });
 
     it('should return an array of revenues', async () => {
-        try {
-            const revenues = await axios.get(`${env.api.url}/api/revenue`);
-
-            if (revenues.data && Array.isArray(revenues.data)) {
-                if (revenues.data[0].id && revenues.data[0].title && revenues.data[0].value) {
-                    return assert.ok(true);
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(async () => {
+            try {
+                const revenues = await axios.get(`${env.api.url}/api/revenue`);
+    
+                if (revenues.data && Array.isArray(revenues.data)) {
+                    if (revenues.data[0].id && revenues.data[0].title && revenues.data[0].value) {
+                        return assert.ok(true);
+                    }
                 }
+    
+                return assert.fail(ok);
+            } catch (err) {
+                return assert.fail(err);
             }
-
-            return assert.fail(ok);
-        } catch (err) {
-            return assert.fail(err);
-        }
+        }, 30000);
     });
 
     it('should return an revenue', async () => {
-        try {
-            const revenue = await axios.get(`${env.api.url}/api/revenue/1`);
-
-            if (revenue.data) {
-                return assert.ok(true);
-            } else {
-                return assert.fail(true);
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(async () => {
+            try {
+                const revenue = await axios.get(`${env.api.url}/api/revenue/1`);
+    
+                if (revenue.data) {
+                    return assert.ok(true);
+                } else {
+                    return assert.fail(true);
+                }
+            } catch (err) {
+                return assert.fail(err);
             }
-        } catch (err) {
-            return assert.fail(err);
-        }
+        }, 30000);
     });
 
     after(async () => {

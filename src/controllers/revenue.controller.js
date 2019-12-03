@@ -2,7 +2,45 @@ const database = require('../config/sequelize');
 
 exports.getRevenues = async (req, res) => {
     try {
-        const revenues = await database.models.Revenue.findAll();
+        const query = {
+            include: [{
+                    model: database.models.Category,
+                    required: false,
+                    attributes: ['title'],
+                },
+                {
+                    model: database.models.FinancialResource,
+                    required: false,
+                    attributes: ['title'],
+                }
+            ],
+            order: [
+                ['id', 'ASC']
+            ],
+            where: {}
+        };
+
+        if (req.query.title && req.query.title != 'null') {
+            query.where.title = {
+                $like: "%" + req.query.title + "%"
+            }
+        }
+
+        if (req.query.date && req.query.date != 'null') {
+            query.where.date = {
+                $eq: new Date(req.query.date)
+            }
+        }
+
+        if (req.query.CategoryId && req.query.CategoryId != 'null') {
+            query.where.CategoryId = req.query.CategoryId;
+        }
+
+        if (req.query.FinancialResourceId && req.query.FinancialResourceId != 'null') {
+            query.where.FinancialResourceId = req.query.FinancialResourceId;
+        }
+
+        const revenues = await database.models.Revenue.findAll(query);
         return res.status(200).send(revenues);
     } catch (error) {
         console.error('ERROR', error);
