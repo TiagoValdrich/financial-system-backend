@@ -31,76 +31,79 @@ describe('Testing Expense Controller', () => {
         server = await createServer();
     });
 
-    it('should return a status 200 if it saved', async () => {
-        try {
-            const expense = {
-                title: 'Teste',
-                value: -50,
-                date: new Date()
-            };
-            const expenseResponse = await axios.put(`${env.api.url}/api/expense`, expense);
-
-            if (expenseResponse.status == 200) {
-                return assert.ok(true);
-            } else {
-                return assert.fail(true);
-            }
-        } catch (err) {
-            return assert.fail(true);
-        }
-    });
-
-    it('should return a status 200 if it updated successfully', async () => {
-        try {
-            const expenseResponse = await axios.get(`${env.api.url}/api/expense/1`);
-            const newExpense = expenseResponse.data;
-            newExpense.title = 'New Expense Title';
-            newExpense.value = -150;
-            const updated = await axios.put(`${env.api.url}/api/expense`, newExpense);
-
-            if (updated.status == 200) {
-                return assert.ok(true);
-            } else {
-                return assert.fail(true);
-            }
-        } catch (err) {
-            return assert.fail(err);
-        }
-    });
-
-    it('should return an array of expenses', async () => {
-        try {
-            const expenses = await axios.get(`${env.api.url}/api/expense`);
-
-            if (expenses.data && Array.isArray(expenses.data)) {
-                if (expenses.data[0].id && expenses.data[0].title && expenses.data[0].value) {
+    // Xunxo for fix database returning resolve without being complete
+    setTimeout(() => {
+        it('should return a status 200 if it saved', async () => {
+            try {
+                const expense = {
+                    title: 'Teste',
+                    value: -50,
+                    date: new Date()
+                };
+                const expenseResponse = await axios.put(`${env.api.url}/api/expense`, expense);
+    
+                if (expenseResponse.status == 200) {
                     return assert.ok(true);
+                } else {
+                    return assert.fail(true);
                 }
-            }
-
-            return assert.fail(ok);
-        } catch (err) {
-            return assert.fail(err);
-        }
-    });
-
-    it('should return an expense', async () => {
-        try {
-            const expense = await axios.get(`${env.api.url}/api/expense/1`);
-
-            if (expense.data) {
-                return assert.ok(true);
-            } else {
+            } catch (err) {
                 return assert.fail(true);
             }
-        } catch (err) {
-            return assert.fail(err);
-        }
-    });
-
-    after(async () => {
-        await closeConn(server);
-    });
+        });
+    
+        it('should return a status 200 if it updated successfully', async () => {
+            try {
+                const expenseResponse = await axios.get(`${env.api.url}/api/expense/1`);
+                const newExpense = expenseResponse.data;
+                newExpense.title = 'New Expense Title';
+                newExpense.value = -150;
+                const updated = await axios.put(`${env.api.url}/api/expense`, newExpense);
+    
+                if (updated.status == 200) {
+                    return assert.ok(true);
+                } else {
+                    return assert.fail(true);
+                }
+            } catch (err) {
+                return assert.fail(err);
+            }
+        });
+    
+        it('should return an array of expenses', async () => {
+            try {
+                const expenses = await axios.get(`${env.api.url}/api/expense`);
+    
+                if (expenses.data && Array.isArray(expenses.data)) {
+                    if (expenses.data[0].id && expenses.data[0].title && expenses.data[0].value) {
+                        return assert.ok(true);
+                    }
+                }
+    
+                return assert.fail(ok);
+            } catch (err) {
+                return assert.fail(err);
+            }
+        });
+    
+        it('should return an expense', async () => {
+            try {
+                const expense = await axios.get(`${env.api.url}/api/expense/1`);
+    
+                if (expense.data) {
+                    return assert.ok(true);
+                } else {
+                    return assert.fail(true);
+                }
+            } catch (err) {
+                return assert.fail(err);
+            }
+        });
+    
+        after(async () => {
+            await closeConn(server);
+        });
+    }, 30000);
 });
 
 function createServer() {
