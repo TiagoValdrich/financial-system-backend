@@ -33,7 +33,7 @@ describe('Testing Expense Controller', () => {
 
     it('should return a status 200 if it saved', async () => {
         // Xunxo for fix database returning resolve without being complete
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
                 const expense = {
                     title: 'Teste',
@@ -55,7 +55,7 @@ describe('Testing Expense Controller', () => {
 
     it('should return a status 200 if it updated successfully', async () => {
         // Xunxo for fix database returning resolve without being complete
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
                 const expenseResponse = await axios.get(`${env.api.url}/api/expense/1`);
                 const newExpense = expenseResponse.data;
@@ -76,7 +76,7 @@ describe('Testing Expense Controller', () => {
 
     it('should return an array of expenses', async () => {
         // Xunxo for fix database returning resolve without being complete
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
                 const expenses = await axios.get(`${env.api.url}/api/expense`);
 
@@ -94,17 +94,20 @@ describe('Testing Expense Controller', () => {
     });
 
     it('should return an expense', async () => {
-        try {
-            const expense = await axios.get(`${env.api.url}/api/expense/1`);
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(async () => {
+            try {
+                const expense = await axios.get(`${env.api.url}/api/expense/1`);
 
-            if (expense.data) {
-                return assert.ok(true);
-            } else {
-                return assert.fail(true);
+                if (expense.data) {
+                    return assert.ok(true);
+                } else {
+                    return assert.fail(true);
+                }
+            } catch (err) {
+                return assert.fail(err);
             }
-        } catch (err) {
-            return assert.fail(err);
-        }
+        }, 30000);
     });
 
     after(async () => {

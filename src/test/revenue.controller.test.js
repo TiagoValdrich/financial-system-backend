@@ -33,7 +33,7 @@ describe('Testing Revenue Controller', () => {
 
     it('should return a status 200 if it saved', async () => {
         // Xunxo for fix database returning resolve without being complete
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
                 const revenue = {
                     title: 'Teste',
@@ -55,7 +55,7 @@ describe('Testing Revenue Controller', () => {
 
     it('should return a status 200 if it updated successfully', async () => {
         // Xunxo for fix database returning resolve without being complete
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
                 const revenueResponse = await axios.get(`${env.api.url}/api/revenue/1`);
                 const newRevenue = revenueResponse.data;
@@ -76,7 +76,7 @@ describe('Testing Revenue Controller', () => {
 
     it('should return an array of revenues', async () => {
         // Xunxo for fix database returning resolve without being complete
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
                 const revenues = await axios.get(`${env.api.url}/api/revenue`);
     
@@ -95,7 +95,7 @@ describe('Testing Revenue Controller', () => {
 
     it('should return an revenue', async () => {
         // Xunxo for fix database returning resolve without being complete
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
                 const revenue = await axios.get(`${env.api.url}/api/revenue/1`);
     
