@@ -31,9 +31,9 @@ describe('Testing Revenue Controller', () => {
         server = await createServer();
     });
 
-    // Xunxo for fix database returning resolve without being complete
-    setTimeout(() => {
-        it('should return a status 200 if it saved', async () => {
+    it('should return a status 200 if it saved', async () => {
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(() => {
             try {
                 const revenue = {
                     title: 'Teste',
@@ -50,9 +50,12 @@ describe('Testing Revenue Controller', () => {
             } catch (err) {
                 return assert.fail(true);
             }
-        });
-    
-        it('should return a status 200 if it updated successfully', async () => {
+        }, 30000);
+    });
+
+    it('should return a status 200 if it updated successfully', async () => {
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(() => {
             try {
                 const revenueResponse = await axios.get(`${env.api.url}/api/revenue/1`);
                 const newRevenue = revenueResponse.data;
@@ -68,9 +71,12 @@ describe('Testing Revenue Controller', () => {
             } catch (err) {
                 return assert.fail(err);
             }
-        });
-    
-        it('should return an array of revenues', async () => {
+        }, 30000);
+    });
+
+    it('should return an array of revenues', async () => {
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(() => {
             try {
                 const revenues = await axios.get(`${env.api.url}/api/revenue`);
     
@@ -84,9 +90,12 @@ describe('Testing Revenue Controller', () => {
             } catch (err) {
                 return assert.fail(err);
             }
-        });
-    
-        it('should return an revenue', async () => {
+        }, 30000);
+    });
+
+    it('should return an revenue', async () => {
+        // Xunxo for fix database returning resolve without being complete
+        setTimeout(() => {
             try {
                 const revenue = await axios.get(`${env.api.url}/api/revenue/1`);
     
@@ -98,13 +107,12 @@ describe('Testing Revenue Controller', () => {
             } catch (err) {
                 return assert.fail(err);
             }
-        });
-    
-        after(async () => {
-            await closeConn(server);
-        });
-    }, 30000);
+        }, 30000);
+    });
 
+    after(async () => {
+        await closeConn(server);
+    });
 });
 
 function createServer() {
